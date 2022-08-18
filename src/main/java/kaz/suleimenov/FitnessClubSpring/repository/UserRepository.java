@@ -2,9 +2,9 @@ package kaz.suleimenov.FitnessClubSpring.repository;
 
 import kaz.suleimenov.FitnessClubSpring.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-/**
- * Репозиторий аккаунтов.
- */
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    boolean existsUserByLogin(String login);
 }

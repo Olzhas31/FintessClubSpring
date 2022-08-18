@@ -7,63 +7,33 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Класс контроллера для клиентов, где задаются HTTP запросы.
- */
 @RestController
 public class ClientsController {
     
     private final ClientsRepository clientsRepository;
 
-    /**
-     * Конструктор - создание нового объекта с определенными значениями
-     * @param clientsRepository - репозиторий клиентов
-     */
     public ClientsController(ClientsRepository clientsRepository) {
         this.clientsRepository = clientsRepository;
     }
 
-    /**
-     * GET запрос
-     * @return все клиенты
-     */
     @GetMapping("/clients")
-    List<Clients> all() {
+    public List<Clients> all() {
         return clientsRepository.findAll();
     }
 
-    /**
-     * POST запрос
-     * @param newClient - новый клиент
-     * @return новый клиент
-     */
     @PostMapping("/clients")
-    Clients newClient(@RequestBody Clients newClient) {
+    public Clients newClient(@RequestBody Clients newClient) {
         return clientsRepository.save(newClient);
     }
 
-    /**
-     * GET запрос определенного клиента
-     * @param id - id клиента
-     * @return клиент по id
-     */
     @GetMapping("/clients/{id}")
-    Clients one(@PathVariable Long id) {
-
+    public Clients one(@PathVariable Long id) {
         return clientsRepository.findById(id)
                 .orElseThrow(() -> new ClientsNotFoundException(id));
     }
 
-
-    /**
-     * PUT запрос на изменение клиента
-     * @param newClient - новый клиент
-     * @param id - id клиента
-     * @return измененный клиент
-     */
     @PutMapping("/clients/{id}")
-    Clients replaceClient(@RequestBody Clients newClient, @PathVariable Long id) {
-
+    public Clients replaceClient(@RequestBody Clients newClient, @PathVariable Long id) {
         return clientsRepository.findById(id)
                 .map(client -> {
                     client.setName(newClient.getName());
@@ -77,12 +47,8 @@ public class ClientsController {
                 });
     }
 
-    /**
-     * DELETE запрос
-     * @param id - id клиента
-     */
     @DeleteMapping("/clients/{id}")
-    void deleteClient(@PathVariable Long id) {
+    public void deleteClient(@PathVariable Long id) {
         clientsRepository.deleteById(id);
     }
 }
